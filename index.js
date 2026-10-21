@@ -36,38 +36,74 @@ async function checkVisited() {
 async function getCurrentUser() {
   const result = await db.query("SELECT * FROM users");
   users = result.rows;
-  return users.find((user) => user.id == currentUserId);
+  return users.find((user) => user.id == currentUserId) || users[0];
 }
 
 app.get("/", async (req, res) => {
-  //Write your code here.
   const countries = await checkVisited();
   const currentUser = await getCurrentUser();
-  res.render("index.ejs", { total: countries.length, countries: countries, users: users, color: currentUser.color });
+  res.render("index.ejs", { 
+    total: countries.length, 
+    countries: countries, 
+    users: users, 
+    color: currentUser ? currentUser.color : "teal" 
+  });
 });
 
 app.post("/add", async (req, res) => {
-  //Write your code here.
-    const countryName = req.body.country;
+  const countryName = req.body.country ? req.body.country.trim() : "";
+  const currentUser = await getCurrentUser();
+
   try {
-    const countryResult = await db.query("SELECT country_code FROM countries WHERE LOWER(country_name) = LOWER($1)", [countryName]);
+    const countryResult = await db.query(
+      `SELECT country_code FROM countries 
+       WHERE LOWER(country_name) = $1 
+          OR UPPER(country_code) = $2
+          OR LOWER(country_name) LIKE '%' || $1 || '%'
+       ORDER BY 
+         CASE 
+           WHEN UPPER(country_code) = $2 THEN 1
+           WHEN LOWER(country_name) = $1 THEN 2 
+           WHEN LOWER(country_name) LIKE $1 || '%' THEN 3 
+           ELSE 4 
+         END
+       LIMIT 1;`,
+      [countryName.toLowerCase(), countryName.toUpperCase()]
+    );
+
+    if (countryResult.rows.length === 0) {
+      throw new Error("Country not found");
+    }
+
     const countryCode = countryResult.rows[0].country_code;
 
     try {
-      await db.query("INSERT INTO visited_countries (country_code, user_id) VALUES ($1, $2)", [countryCode, currentUserId]);
+      await db.query(
+        "INSERT INTO visited_countries (country_code, user_id) VALUES ($1, $2)",
+        [countryCode, currentUserId]
+      );
       res.redirect("/");
     } catch (error) {
-        const countries = await checkVisited();
-        const currentUser = await getCurrentUser();
-        res.render("index.ejs", { total: countries.length, countries: countries, users: users, color: currentUser.color, error: "Country has already been added, try again." });
-        return;
-        
+      const countries = await checkVisited();
+      res.render("index.ejs", {
+        total: countries.length,
+        countries: countries,
+        users: users,
+        color: currentUser.color,
+        error: "Country has already been added, try again.",
+      });
+      return;
     }
   } catch (error) {
-      const countries = await checkVisited();
-      const currentUser = await getCurrentUser();
-      res.render("index.ejs", { total: countries.length, countries: countries, users: users, color: currentUser.color, error: "Country not found, please try again." });
-      return;
+    const countries = await checkVisited();
+    res.render("index.ejs", {
+      total: countries.length,
+      countries: countries,
+      users: users,
+      color: currentUser.color,
+      error: "Country not found, please try again.",
+    });
+    return;
   }
 });
 

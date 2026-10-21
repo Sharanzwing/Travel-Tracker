@@ -4,50 +4,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New User</title>
-  <link rel="stylesheet" href="./styles/main.css">
+  <title>Add Family Member - Travel Tracker</title>
   <link rel="stylesheet" href="./styles/new.css">
 </head>
 
 <body>
-  <h1>Add a Family Member</h1>
-  <form action="/new" method="post">
-    <p>What's your name?</p>
-    <input type="text" name="name">
+  <div class="modal-card">
+    <div class="card-header">
+      <a href="/" class="back-link">← Back to World Map</a>
+      <h1 class="card-title">Add Family Member</h1>
+      <p class="card-subtitle">Choose a name and a custom color for their travel map.</p>
+    </div>
 
-    <p>Pick a color:</p>
-    <input type="radio" name="color" id="red" value="red" />
-    <label for="red"><span class="red"></span></label>
+    <form action="/new" method="post">
+      <div class="form-group">
+        <label class="form-label" for="name">What's their name?</label>
+        <input class="text-input" type="text" name="name" id="name" placeholder="e.g. Sarah" autofocus required>
+      </div>
 
-    <input type="radio" name="color" id="green" value="green" />
-    <label for="green"><span class="green"></span></label>
+      <div class="form-group">
+        <label class="form-label">Pick their map color</label>
+        <div class="color-palette">
+          <input type="radio" name="color" id="teal" value="teal" checked />
+          <label class="color-swatch-label" for="teal" title="Teal"><span class="teal"></span></label>
 
-    <input type="radio" name="color" id="yellow" value="yellow" />
-    <label for="yellow"><span class="yellow"></span></label>
+          <input type="radio" name="color" id="blue" value="blue" />
+          <label class="color-swatch-label" for="blue" title="Blue"><span class="blue"></span></label>
 
-    <input type="radio" name="color" id="olive" value="olive" />
-    <label for="olive"><span class="olive"></span></label>
+          <input type="radio" name="color" id="green" value="green" />
+          <label class="color-swatch-label" for="green" title="Green"><span class="green"></span></label>
 
-    <input type="radio" name="color" id="orange" value="orange" />
-    <label for="orange"><span class="orange"></span></label>
+          <input type="radio" name="color" id="red" value="red" />
+          <label class="color-swatch-label" for="red" title="Red"><span class="red"></span></label>
 
-    <input type="radio" name="color" id="teal" value="indigo" />
-    <label for="teal"><span class="teal"></span></label>
+          <input type="radio" name="color" id="orange" value="orange" />
+          <label class="color-swatch-label" for="orange" title="Orange"><span class="orange"></span></label>
 
-    <input type="radio" name="color" id="blue" value="blue" />
-    <label for="blue"><span class="blue"></span></label>
+          <input type="radio" name="color" id="yellow" value="yellow" />
+          <label class="color-swatch-label" for="yellow" title="Yellow"><span class="yellow"></span></label>
 
-    <input type="radio" name="color" id="violet" value="violet" />
-    <label for="violet"><span class="violet"></span></label>
+          <input type="radio" name="color" id="olive" value="olive" />
+          <label class="color-swatch-label" for="olive" title="Olive"><span class="olive"></span></label>
 
-    <input type="radio" name="color" id="purple" value="purple" />
-    <label for="purple"><span class="purple"></span></label>
+          <input type="radio" name="color" id="violet" value="violet" />
+          <label class="color-swatch-label" for="violet" title="Violet"><span class="violet"></span></label>
 
-    <input type="radio" name="color" id="pink" value="pink" />
-    <label for="pink"><span class="pink"></span></label>
-    <div class="spacer"></div>
-    <button type="submit">Add</button>
-  </form>
+          <input type="radio" name="color" id="purple" value="purple" />
+          <label class="color-swatch-label" for="purple" title="Purple"><span class="purple"></span></label>
+
+          <input type="radio" name="color" id="pink" value="pink" />
+          <label class="color-swatch-label" for="pink" title="Pink"><span class="pink"></span></label>
+        </div>
+      </div>
+
+      <button class="submit-btn" type="submit">Create Member</button>
+    </form>
+  </div>
 </body>
 
 </html>

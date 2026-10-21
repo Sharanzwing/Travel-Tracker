@@ -1,94 +1,204 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
-* {
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
 body {
-  position: absolute;
-  top: 35%;
-  left: 35%;
-  transform: translate(-35%, -35%);
-  font-family: "Roboto";
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: #0a0e17;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(30, 41, 59, 0.8), transparent),
+    radial-gradient(circle at 10% 90%, rgba(15, 23, 42, 0.9), transparent);
+  color: #f8fafc;
+  padding: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.modal-card {
+  width: min(100%, 460px);
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  animation: cardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-header {
+  margin-bottom: 28px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-decoration: none;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: #f8fafc;
+  transform: translateX(-2px);
+}
+
+.card-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
   color: #ffffff;
 }
+
+.card-subtitle {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.text-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.text-input:focus {
+  background: rgba(15, 23, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+/* Color Radio Palette Grid */
+.color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 4px 0;
+}
+
 input[type="radio"] {
   display: none;
 }
-input[type="radio"]:checked + label span {
-  transform: scale(1.25);
-}
-input[type="radio"]:checked + label .red {
-  border: 2px solid #711313;
-}
-input[type="radio"]:checked + label .orange {
-  border: 2px solid #873a08;
-}
-input[type="radio"]:checked + label .yellow {
-  border: 2px solid #816102;
-}
-input[type="radio"]:checked + label .olive {
-  border: 2px solid #505a0b;
-}
-input[type="radio"]:checked + label .green {
-  border: 2px solid #0e4e1d;
-}
-input[type="radio"]:checked + label .teal {
-  border: 2px solid #003633;
-}
-input[type="radio"]:checked + label .blue {
-  border: 2px solid #103f62;
-}
-input[type="radio"]:checked + label .violet {
-  border: 2px solid #321a64;
-}
-input[type="radio"]:checked + label .purple {
-  border: 2px solid #501962;
-}
-input[type="radio"]:checked + label .pink {
-  border: 2px solid #851554;
-}
-label {
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
+
+label.color-swatch-label {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
-label:hover span {
-  transform: scale(1.25);
+
+label.color-swatch-label:hover {
+  transform: scale(1.15);
 }
-label span {
+
+label.color-swatch-label span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   display: block;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Colors definition */
+.red { background: #ef4444; }
+.orange { background: #f97316; }
+.yellow { background: #eab308; }
+.olive { background: #84cc16; }
+.green { background: #10b981; }
+.teal { background: #14b8a6; }
+.blue { background: #3b82f6; }
+.violet { background: #6366f1; }
+.purple { background: #a855f7; }
+.pink { background: #ec4899; }
+
+/* Radio Checked Active Ring */
+input[type="radio"]:checked + label.color-swatch-label {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 3px #0a0e17, 0 0 0 5px rgba(255, 255, 255, 0.85);
+}
+
+input[type="radio"]:checked + label.color-swatch-label::after {
+  content: "✓";
+  position: absolute;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+
+.submit-btn {
   width: 100%;
-  height: 100%;
-  transition: transform 0.2s ease-in-out;
+  height: 48px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 16px -4px rgba(20, 184, 166, 0.4);
 }
-label span.red {
-  background: #db2828;
+
+.submit-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px -4px rgba(20, 184, 166, 0.5);
 }
-label span.orange {
-  background: #f2711c;
-}
-label span.yellow {
-  background: #fbbd08;
-}
-label span.olive {
-  background: #b5cc18;
-}
-label span.green {
-  background: #21ba45;
-}
-label span.teal {
-  background: #00b5ad;
-}
-label span.blue {
-  background: #2185d0;
-}
-label span.violet {
-  background: #6435c9;
-}
-label span.purple {
-  background: #a333c8;
-}
-label span.pink {
-  background: #e03997;
+
+.submit-btn:active {
+  transform: translateY(0);
 }
