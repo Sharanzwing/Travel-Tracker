@@ -3,15 +3,22 @@ import bodyParser from "body-parser";
 import pg from "pg";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "world",
-  password: "YOUR_PASSWORD",
-  port: 5432,
-});
+const db = process.env.DATABASE_URL
+  ? new pg.Client({
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    })
+  : new pg.Client({
+      user: process.env.PG_USER || "postgres",
+      host: process.env.PG_HOST || "localhost",
+      database: process.env.PG_DATABASE || "world",
+      password: process.env.PG_PASSWORD || "SistECE*181222134",
+      port: Number(process.env.PG_PORT) || 5432,
+    });
 await db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
