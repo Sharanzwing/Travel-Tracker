@@ -24,11 +24,11 @@ await db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let currentUserId = 1;
+let currentUserId = 3;
 
 let users = [
-  { id: 1, name: "Angela", color: "teal" },
-  { id: 2, name: "Jack", color: "powderblue" },
+  { id: 3, name: "Sharan", color: "teal" },
+  { id: 4, name: "PRIYA", color: "powderblue" },
 ];
 
 async function checkVisited() {
