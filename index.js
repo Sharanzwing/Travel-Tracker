@@ -24,11 +24,11 @@ await db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let currentUserId = 3;
+let currentUserId = 1;
 
 let users = [
-  { id: 3, name: "Sharan", color: "teal" },
-  { id: 4, name: "PRIYA", color: "powderblue" },
+  { id: 1, name: "Sharan", color: "teal" },
+  { id: 2, name: "Priya", color: "powderblue" },
 ];
 
 async function checkVisited() {
@@ -43,12 +43,16 @@ async function checkVisited() {
 async function getCurrentUser() {
   const result = await db.query("SELECT * FROM users");
   users = result.rows;
-  return users.find((user) => user.id == currentUserId) || users[0];
+  const user = users.find((user) => user.id == currentUserId) || users[0];
+  if (user) {
+    currentUserId = user.id;
+  }
+  return user;
 }
 
 app.get("/", async (req, res) => {
-  const countries = await checkVisited();
   const currentUser = await getCurrentUser();
+  const countries = await checkVisited();
   res.render("index.ejs", { 
     total: countries.length, 
     countries: countries, 
